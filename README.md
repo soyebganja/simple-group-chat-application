@@ -1,1 +1,0 @@
-# simple-group-chat-application
