@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Simple Group Chat Application</title>
+  <link href="/css/style.css" rel="stylesheet" type="text/css">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+
+<body>
+  <ul id="messages"></ul>
+  <form action="/" method="POST" id="chatForm">
+    <input id="txt" autocomplete="off" autofocus="on" placeholder="type your message here..." /><button>Send</button>
+  </form>
+  <script>
+    // The rest of your code goes here!
+    const socket = io.connect('http://localhost:3000');
+
+    // submit text message without reload/refresh the page
+    $('form').submit(e => {
+      e.preventDefault(); // prevents page reloading
+      if ($('#txt').val().trim())
+        socket.emit('chat_message', $('#txt').val());
+      $('#txt').val('');
+      return false;
+    });
+
+    // append the chat text message
+    socket.on('chat_message', msg => {
+      $('#messages').append($('<li>').html(msg));
+    });
+
+    // append text if someone is online
+    socket.on('is_online', username => {
+      $('#messages').append($('<li>').html(username));
+      socket.emit('message', "this is a test");
+    });
+
+    // ask username
+    const username = prompt('Please enter username');
+    if (!username.trim()) {
+      alert('Oops! please enter proper username');
+    }
+
+    // add user to socket
+    socket.on('connect', () => {
+      if (username.trim())
+        socket.emit('username', username);
+      else {
+        location.reload();
+      }
+    });
+
+    // show history chate to new user only
+    socket.on('chat_history', chatHistory => {
+      $('#messages').append(chatHistory);
+    });
+
+    // Error hanndling 
+    socket.on('Error', err => {
+      alert(err);
+    });
+  </script>
+</body>
+
+</html>
