@@ -1,33 +1,21 @@
-# library-app
+# simple-group-chat-application
 
 ### To Setup the program by using
 
 ```shell
-1. $ git clone https://github.com/soyebganja/library-app.git
-```
-
-
-```shell
-2. $ cd library-app/
+$ git clone https://github.com/soyebganja/simple-group-chat-application.git
 ```
 
 ```shell
-3. $ npm i
+$ cd simple-group-chat-application/
 ```
 
-4. Create .env file at root level from .env.example and set environmental values
+```shell
+$ npm i
+```
 
 ### To Run the program by using
 
 ```shell
-$ npm start
+$ node index.js
 ```
-### To Run the Functional Test with Endpoints by using
-
-```shell
-$ npm test
-```
-
-### To Run API documented (OpenAPI) by using URI on brawser
-
-http://localhost:3003/api-docs/
